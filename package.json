@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "start": "webpack-dev-server --open --config ./webpack/dev.babel.js",
-    "build": "rimraf dist && webpack --config ./webpack/dev.babel.js",
+    "build": "npm run rimraf && webpack --config ./webpack/dev.babel.js",
+    "build:dll": "webpack --config ./webpack/dll.babel.js",
+    "rimraf": "rimraf [dist npm-debug.log]",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

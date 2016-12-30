@@ -8,7 +8,6 @@ const PORT = 3000;
 const config = {
   entry: {
       main: path.join(process.cwd(), 'index.js'),
-      vendor: 'react',
   },
   output: {
     filename: '[chunkhash].[name].js',
@@ -18,8 +17,12 @@ const config = {
     rules: [{
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
-
+        loader: 'babel-loader',
+        query: {
+          cacheDirectory: true, //important for performance
+          plugins: ["transform-regenerator"],
+          presets: ["react", "es2015", "stage-0"]
+        }
       }, {
         test: /\.css$/,
         exclude: /node_modules/,
@@ -27,8 +30,9 @@ const config = {
     }]
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['main', 'vendor']
+    new webpack.DllReferencePlugin({
+        context: path.join(process.cwd()),
+        manifest: require('example-dll/vendor-manifest.json')
     }),
     new ExtractTextPlugin({
       filename: 'bundle.css',
