@@ -4,6 +4,7 @@
   "description": "Webpack 2 playground",
   "main": "app.js",
   "scripts": {
+    "start": "webpack-dev-server --open",
     "build": "rimraf dist && webpack --config webpack.config.babel.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -29,6 +30,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    "html-webpack-plugin": "^2.24.1",
     "rimraf": "^2.5.4",
     "webpack": "^2.2.0-rc.2",
     "webpack-dev-server": "^2.2.0-rc.0"
