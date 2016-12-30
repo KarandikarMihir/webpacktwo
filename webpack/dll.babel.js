@@ -14,6 +14,7 @@ const config = {
     new webpack.DllPlugin({
       path: path.join(process.cwd(), 'node_modules', 'example-dll', 'vendor-manifest.json'),
       name: 'vendor',
+      context: path.join(process.cwd())
     }),
   ],
 }
