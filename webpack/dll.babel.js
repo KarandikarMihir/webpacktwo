@@ -1,10 +1,9 @@
 import webpack from 'webpack';
 import path from 'path';
+import pkg from '../package.json';
 
 const config = {
-  entry: [
-    path.join(process.cwd(), 'vendors.js')
-  ],
+  entry: Object.keys(pkg.dependencies),
   output: {
     filename: 'dll.vendor.js',
     path: path.join(process.cwd(), 'dist', 'dll'),
