@@ -3,14 +3,16 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
 
+const PORT = 3000;
+
 const config = {
   entry: {
-    main: path.resolve(__dirname, 'index.js'),
-    vendor: 'react'
+      main: path.join(process.cwd(), 'index.js'),
+      vendor: 'react',
   },
   output: {
     filename: '[chunkhash].[name].js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.join(process.cwd(), 'dist'),
   },
   module: {
     rules: [{
@@ -35,18 +37,18 @@ const config = {
     }),
     new HtmlWebpackPlugin({
       inject: true,
-      template: path.resolve(__dirname, 'index.html')
+      template: path.join(process.cwd(), 'index.html')
     }),
   ],
-  devtool: 'cheap-eval-source-map',
+  devtool: 'cheap-module-eval-source-map',
   devServer: {
     host: 'localhost',
-    contentBase: path.join(__dirname, "dist"),
+    contentBase: path.join(process.cwd(), "dist"),
     compress: true,
-    port: 3000,
+    port: PORT,
     clientLogLevel: 'error',
     quiet: true,
-    historyApiFallback: true
+    historyApiFallback: true,
   }
 };
 

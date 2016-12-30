@@ -4,8 +4,8 @@
   "description": "Webpack 2 playground",
   "main": "app.js",
   "scripts": {
-    "start": "webpack-dev-server --open",
-    "build": "rimraf dist && webpack --config webpack.config.babel.js",
+    "start": "webpack-dev-server --open --config ./webpack/dev.babel.js",
+    "build": "rimraf dist && webpack --config ./webpack/dev.babel.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
