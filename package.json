@@ -8,7 +8,7 @@
     "build:webpack": "webpack --config ./webpack/dev.babel.js",
     "build:dll": "webpack --config ./webpack/dll.babel.js",
     "build": "npm run clean && npm run build:dll && npm run build:webpack",
-    "clean": "rimraf dist ./node_modules/example-dll",
+    "clean": "rimraf build ./node_modules/example-dll",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,6 +31,7 @@
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
+    "cheerio": "^0.22.0",
     "css-loader": "^0.26.1",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "html-webpack-plugin": "^2.24.1",

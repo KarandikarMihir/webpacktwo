@@ -2,18 +2,22 @@ import webpack from 'webpack';
 import path from 'path';
 import pkg from '../package.json';
 
+const outputPath = path.join(process.cwd(), 'build', 'dll')
+
 const config = {
+  context: process.cwd(),
   entry: Object.keys(pkg.dependencies),
+  devtool: 'eval',
   output: {
     filename: 'dll.vendor.js',
-    path: path.join(process.cwd(), 'dist', 'dll'),
+    path: outputPath,
+    publicPath: '/',
     library: 'vendor',
   },
   plugins: [
     new webpack.DllPlugin({
-      path: path.join(process.cwd(), 'node_modules', 'example-dll', 'vendor-manifest.json'),
       name: 'vendor',
-      context: path.join(process.cwd())
+      path: path.join(outputPath, 'vendor-manifest.json'),
     }),
   ],
 }
