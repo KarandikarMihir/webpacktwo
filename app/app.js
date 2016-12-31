@@ -4,7 +4,7 @@ import './app.css';
 class App extends React.Component {
     render() {
         return (
-            <h1>React + Webpack 2</h1>
+            <h1>React + Webpack 2 + HMR</h1>
         )
     }
 }

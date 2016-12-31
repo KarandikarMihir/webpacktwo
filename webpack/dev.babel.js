@@ -7,10 +7,15 @@ const PORT = 3000;
 
 const config = {
   entry: {
-      main: path.join(process.cwd(), 'index.js'),
+      main: [
+        'react-hot-loader/patch',
+        `webpack-dev-server/client?http://localhost:${PORT}`,
+        'webpack/hot/only-dev-server',
+        path.join(process.cwd(), 'index.js'),
+      ]
   },
   output: {
-    filename: '[chunkhash].[name].js',
+    filename: '[hash].[name].js',
     path: path.join(process.cwd(), 'dist'),
   },
   module: {
@@ -30,6 +35,8 @@ const config = {
     }]
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new webpack.DllReferencePlugin({
         context: path.join(process.cwd()),
         manifest: require('example-dll/vendor-manifest.json')
