@@ -1,11 +1,11 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const cheerio = require('cheerio');
 const path = require('path');
 const fs = require('fs');
 
-const PORT = 3000;
 const dllPath = path.join(process.cwd(), 'node_modules', 'app-dll')
 const manifestPath = path.join(dllPath, 'vendor-manifest.json');
 
@@ -23,6 +23,7 @@ module.exports = {
   output: {
     path: path.resolve(process.cwd(), 'build'),
     filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
     publicPath: '/',
   },
   module: {
@@ -40,6 +41,12 @@ module.exports = {
     }]
   },
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      children: true,
+      minChunks: 2,
+      async: true,
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.NoErrorsPlugin(),
@@ -55,6 +62,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       templateContent: templateContent(),
+    }),
+    new CircularDependencyPlugin({
+      exclude: /a\.js|node_modules/, // exclude node_modules
+      failOnError: false, // show a warning when there is a circular dependency
     }),
   ],
   devtool: 'cheap-module-eval-source-map',

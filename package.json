@@ -4,10 +4,9 @@
   "description": "Webpack 2 playground",
   "main": "app.js",
   "scripts": {
-    "start": "node server.js",
-    "build:webpack": "webpack --config ./webpack/dev.babel.js",
-    "build:dll": "webpack --config ./webpack/dll.babel.js",
-    "build": "npm run clean && npm run build:dll && npm run build:webpack",
+    "start": "cross-env NODE_ENV=development node server.js",
+    "build:dll": "cross-env BUILDING_DLL=true webpack --display-chunks --color --config ./webpack/dll.babel.js",
+    "build:prod": "npm run clean && cross-env NODE_ENV=production webpack --config ./webpack/prod.babel.js",
     "clean": "rimraf build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -33,6 +32,8 @@
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.16.0",
     "cheerio": "^0.22.0",
+    "circular-dependency-plugin": "^2.0.0",
+    "cross-env": "^3.1.3",
     "css-loader": "^0.26.1",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.14.0",
