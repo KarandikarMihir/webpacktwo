@@ -1,22 +1,24 @@
-import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import cheerio from 'cheerio';
-import path from 'path';
-import fs from 'fs';
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const cheerio = require('cheerio');
+const path = require('path');
+const fs = require('fs');
 
 const PORT = 3000;
-const dllPath = path.resolve(process.cwd(), 'node_modules', 'example-dll');
+const dllPath = path.join(process.cwd(), 'node_modules', 'app-dll')
 const manifestPath = path.join(dllPath, 'vendor-manifest.json');
 
-const config = {
+module.exports = {
   entry: {
-      main: [
-        'react-hot-loader/patch',
-        `webpack-dev-server/client?http://localhost:${PORT}`,
-        'webpack/hot/only-dev-server',
-        path.join(process.cwd(), 'index.js'),
-      ]
+    main: [
+      // necessary for hot reloading with IE:
+      'eventsource-polyfill',
+      // listen to code updates emitted by hot middleware:
+      'webpack-hot-middleware/client',
+      // your code:
+      path.join(process.cwd(), 'index.js'),
+    ]
   },
   output: {
     path: path.resolve(process.cwd(), 'build'),
@@ -28,6 +30,9 @@ const config = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
+        query: {
+          presets: ['react-hmre'],
+        },
       }, {
         test: /\.css$/,
         exclude: /node_modules/,
@@ -53,15 +58,6 @@ const config = {
     }),
   ],
   devtool: 'cheap-module-eval-source-map',
-  devServer: {
-    host: 'localhost',
-    contentBase: path.join(process.cwd(), 'build'),
-    compress: true,
-    port: PORT,
-    clientLogLevel: 'error',
-    quiet: true,
-    historyApiFallback: true,
-  },
 };
 
 function templateContent() {
@@ -71,8 +67,6 @@ function templateContent() {
 
   const doc = cheerio(html);
   const body = doc.find('body');
-  body.append(`<script type="text/javascript" data-dll='true' src='/dll/dll.vendor.js'></script>`)
+  body.append(`<script type="text/javascript" src='/vendor.dll.js'></script>`)
   return doc.toString();
 }
-
-export default config;

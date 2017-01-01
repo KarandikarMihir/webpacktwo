@@ -1,15 +1,15 @@
-import webpack from 'webpack';
-import path from 'path';
-import pkg from '../package.json';
+const webpack = require('webpack');
+const path = require('path');
+const pkg = require('../package.json');
 
-const outputPath = path.join(process.cwd(), 'build', 'dll')
+const outputPath = path.join(process.cwd(), 'node_modules', 'app-dll')
 
-const config = {
+module.exports = {
   context: process.cwd(),
   entry: Object.keys(pkg.dependencies),
   devtool: 'eval',
   output: {
-    filename: 'dll.vendor.js',
+    filename: 'vendor.dll.js',
     path: outputPath,
     publicPath: '/',
     library: 'vendor',
@@ -20,6 +20,4 @@ const config = {
       path: path.join(outputPath, 'vendor-manifest.json'),
     }),
   ],
-}
-
-export default config;
+};
