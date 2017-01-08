@@ -6,16 +6,19 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node server.js",
     "build:dll": "cross-env BUILDING_DLL=true webpack --display-chunks --color --config ./webpack/dll.babel.js",
-    "build:prod": "npm run clean && cross-env NODE_ENV=production webpack --config ./webpack/prod.babel.js",
+    "build": "npm run clean && cross-env NODE_ENV=production webpack --config ./webpack/prod.babel.js",
     "clean": "rimraf build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/KarandikarMihir/webpacktwo.git"
   },
   "keywords": [
-    "webpack"
+    "webpack",
+    "react",
+    "jest",
+    ""
   ],
   "author": "Mihir Karandikar <karandikar.mihir@outlook.com>",
   "license": "ISC",
@@ -26,7 +29,9 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
+    "babel-jest": "^18.0.0",
     "babel-loader": "^6.2.10",
+    "babel-polyfill": "^6.20.0",
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-react-hmre": "^1.1.1",
@@ -39,6 +44,8 @@
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "html-webpack-plugin": "^2.24.1",
+    "jest": "^18.1.0",
+    "react-test-renderer": "^15.4.2",
     "rimraf": "^2.5.4",
     "webpack": "^2.2.0-rc.3",
     "webpack-dev-middleware": "^1.9.0",
@@ -48,6 +55,7 @@
   "dependencies": {
     "moment": "^2.17.1",
     "react": "^15.4.1",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "styled-components": "^1.2.1"
   }
 }
